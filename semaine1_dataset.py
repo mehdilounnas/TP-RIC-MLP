@@ -63,24 +63,25 @@ yg = np.linspace(-5, 5, res)
 Xg, Yg = np.meshgrid(xg, yg)
 Zg = f(Xg, Yg)
 
-fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+fig = plt.figure(figsize=(12, 5))
 fig.suptitle("TP RIC — Semaine 1 : f(x,y) = sin(√(x²+y²)) + 0.5·cos(2x+2y)", fontsize=12)
 
 # Heatmap
-ax = axes[0]
-im = ax.imshow(Zg, extent=[-5, 5, -5, 5], origin='lower', cmap='plasma', aspect='auto')
-plt.colorbar(im, ax=ax, label='z')
-ax.set_title("Heatmap — vérité terrain")
-ax.set_xlabel("x")
-ax.set_ylabel("y")
+ax1 = fig.add_subplot(1, 2, 1)
+im = ax1.imshow(Zg, extent=[-5, 5, -5, 5], origin='lower', cmap='plasma', aspect='auto')
+plt.colorbar(im, ax=ax1, label='z')
+ax1.set_title("Heatmap — vérité terrain")
+ax1.set_xlabel("x")
+ax1.set_ylabel("y")
 
-# Scatter plot des 2000 points
-ax = axes[1]
-sc = ax.scatter(x_raw, y_raw, c=z_raw, cmap='plasma', s=5, alpha=0.6)
-plt.colorbar(sc, ax=ax, label='z')
-ax.set_title("Scatter plot — 2000 points générés")
-ax.set_xlabel("x")
-ax.set_ylabel("y")
+# Scatter 3D
+ax2 = fig.add_subplot(1, 2, 2, projection='3d')
+sc = ax2.scatter(x_raw, y_raw, z_raw, c=z_raw, cmap='plasma', s=3, alpha=0.6)
+plt.colorbar(sc, ax=ax2, label='z', shrink=0.5)
+ax2.set_title("Scatter 3D — 2000 points")
+ax2.set_xlabel("x")
+ax2.set_ylabel("y")
+ax2.set_zlabel("z")
 
 plt.tight_layout()
 plt.savefig("semaine1_visualisation.png", dpi=150, bbox_inches='tight')
